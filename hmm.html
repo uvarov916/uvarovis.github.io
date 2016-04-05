@@ -54,8 +54,19 @@
     <section>
         <div class="row">
             <div class="columns small-12 medium-10 small-centered">
-                <h2>Method and Implementation</h2>
-                <p>TO FILL</p>
+                <h2>Methods and Implementation</h2>
+                <h3>General</h3>
+                <p><b>read_hmm_from_file()</b> - reads HMM from a given file and saves values for a given instance of HMM object.</p>
+                <h3>recognizy.py</h3>
+                <p><b>forward()</b> - implements the "forward part" of the forward/backward procedure discussed in class. Given the HMM and observation sequence, it returns the observation probability of that sequence.</p>
+                <h3>statepath.py</h3>
+                <p><b>initModel()</b> - initializes values of HMM by reading it from a given file. It's similar to read_hmm_from_file(), but was implemented by other team members.</p>
+                <p><b>statePath()</b> - implements the Viterbi algorithm to determine the optimal state path for each observation set and reports its probability.</p>
+                <h3>optimize.py</h3>
+                <p><b>forward2()</b> - similat to forward(), but gets only relevant parameters. We use it to compute the probability of the optimized hmm.</p>
+                <p><b>backward()</b> - performs the backward procedure.</p>
+                <p><b>gammaFunc()</b> - computes the gamma variable which is a 2D array.</p>
+                <p><b>epsi()</b> - calculates and returns the new epsilon variable.</p>
             </div>
         </div>
     </section>
@@ -137,7 +148,8 @@ pi:
         <div class="row">
             <div class="columns small-12 medium-10 small-centered">
                 <h2>Discussion</h2>
-                <p>TO FILL</p>
+                <p>Our programs implement classes and their methods to read information from files and extract them. We believe this is a strength of our program because it is organized and efficient. The forward algorithm calculates the output probability of each observation sequence. However, since the HMM is limited in its vocabulary, we expected a higher probability than the one given by the algorithm. We found the optimal state path by using the Viterbi algorithm. However, the HMM is flawed because it cannot recognize a sequence that contains AUXILARY followed by SUBJECT, or in other words, a question. We acutely came to the conclusion that including a question mark in these sequences would lead to a runtime error because it cannot recognize symbols. Additionally, we are aware the limitations of the Baum-Welch algorithm in terms of the runtime error due to the possibility of dividing by an observation probability of zero.</p> 
+                <p>Our methods are successful in providing the correct probabilities for the sequences. Although we expected a higher probability for sequences that followed the rules of English syntax, we are aware the correct probabilities given in the assignment sheet, and our probabilities match those given. Our results confirmed the limitations of the HMM. We were able to enhance the HMM by adding two additional states (ADVERB and PRESENT TENSE) to the model. In the future, we would clean up the methods needed to read from files.</p>
             </div>
         </div>
     </section>
