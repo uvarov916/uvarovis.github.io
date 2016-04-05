@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hidden Markov Models and Natural Language Processing</title>
+    <link rel="stylesheet" type="text/css" href="public/ai/css/app.css">
+</head>
+<body>
+    <header>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <img src="img/bu-logo.gif">
+                <h1>Hidden Markov Models and Natural Language Processing</h1>
+            </div>
+        </div>
+        
+        <div class="project-facts">
+            <div class="row">
+                <div class="columns small-6 medium-5 medium-offset-1 left">
+                    <h3>Ivan Uvarov</h3>
+                    <p>Team: David Wang, Cyril Saade, Rebecca Jellinek</p>
+                </div>
+                <div class="columns small-6 medium-5 left text-right">
+                    <h3>CS440 P3</h3>
+                    <p>April 5, 2016</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+            
+                <div class="contributions">
+                    <h3>My contribution</h3>
+                    <p>TO FILL</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <h2>Problem Definition</h2>
+                <p>In this programming assignment, we used Hidden Markov Models to process natural language. We built a program that recognizes sentences and computes the probability of its occurrence. Then, we chose the best state path, and its corresponding tokens for the sequence, for the model based on the highest output probability. Based on these probabilities, and using the Baum-Welch algorithm, we optimized the HMM.</p>
+                <p>The vocabulary supported by the HMM is very limited and does not mirror common English because it cannot recognize articles or preposition. This presents difficulties in the original HMM such as unreasonably low output probabilities. We assume that "SUBJECT AUXILLARY PREDICATE OBJECT" is a "good" English sentence, and each syntactic structure is used to name an individual HMM state.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <h2>Method and Implementation</h2>
+                <p>TO FILL</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <h2>Experiments and Results</h2>
+                <h3>Forward Algorithm Question</h3>
+                <p>
+                    Program output:<br>
+                    0.027<br>
+                    0.0288<br>
+                    0.0
+                </p>
+                <p>The first two observation sequences are correct English- "kids play chess" and "robots eat food"- because they follow SUBJECT PREDICATE OBJECT. We expected the probability output to be higher than 2.7% and 2.8%, respectively, given that the observations follow the model. As a result, the HMM must be optimized because it does not always give a reasonable answer.</p>
+                <p>Given the following observation data, the output probability is 0.5% and 0.0%, respectively. Both probabilities should be 0% because they do not follow proper English.</p>
+                <p>
+                    2<br>
+                    4<br>
+                    robots do kids play chess<br>
+                    Output probability: 0.001512<br>
+                    chess eat play kids<br>
+                    Output probability: 0.0
+                </p>
+                <h3>Viterbi Algorithm Question</h3>
+                <p>
+                    Program output:<br>
+                    0.027 SUBJECT PREDICATE OBJECT<br>
+                    0.0288 SUBJECT PREDICATE OBJECT<br>
+                    0.0
+                </p>
+                <p>We can tell from the optimal path of the sentence is semantically correct (i.e. if the words are in the correct order and thus form a grammatically correct sentence).</p>
+                <p>If we run statepath.py with "can kids play chess", we get the following output:</p>
+                <p>0.004725 AUXILIARY SUBJECT PREDICATE OBJECT</p>
+                <p>Therefore, our HMM is also able to recognize sentences that are in form of a question. This result makes sense since the transition probability between "AUXILARY" and "SUBJECT" is not 0, therefore, our HMM is able to detect an auxiliary followed by a subject.</p>
+                <p>However, our HMM can't detect sentences with inflection such as "kids play chess?"" since our HMM does not recognize the question mark.</p>
+                <p>This will either result in either a runtime error, or our HMM will end up detecting a statement instead of a question.</p>
+                <h3>Baum-Welch algorithm Question</h3>
+                <p>If we try to optimize an HMM that has an observation probability equal to zero, the Baum-Welch algorithm would result in a division by zero while computing the gamma and epsilon variables that are used to update the model.</p>
+                <p>Therefore, the Baum-Welch algorithm would result in a runtime error, and would not be applicable with such time of HMM.</p>
+                <h3>Model Enhancement</h3>
+                <p>In order to recognize new syntax structures, we would need to add two additional states to our Hidden Markov Model. We would therefore need to add two states called: "ADVERB" and "PRESENT TENSE"</p>
+                <p>As a consequence:</p>
+                <ol>
+                    <li>We would need to add two rows as well as two columns to our state transition matrix</li>
+                    <li>We would need to add two elements to the initial state distribution vector</li>
+                    <li>We would need to add two rows to our observation matrix</li>
+                </ol>
+                <p>Here is an example of our new HMM:</p>
+                <pre>
+a:
+0.0, 1.0, 0.0, 0.0, 0.0, 0.0 
+1.0, 0.0, 0.0, 0.0, 0.0, 0.0 
+0.0, 0.0, 0.0, 1.0, 0.0, 0.0 
+0.0, 0.0, 0.0, 1.0, 0.0, 0.0
+0.0, 0.0, 0.0, 0.0, 1.0, 0.0
+0.0, 0.0, 0.0, 0.0, 0.0, 1.0
+                </pre>
+                <pre>
+b:
+0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 
+0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0 
+0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0 
+0.1, 0.2, 0.0, 0.0, 0.0, 0.0, 0.3, 0.4
+0.0, 0.3, 0.0, 0.1, 0.4, 0.2, 0.0, 0.0
+0.3, 0.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.1
+                </pre>
+                <pre>
+pi:
+0.1 0.2 0.1 0.2 0.1 0.3
+                </pre>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <h2>Discussion</h2>
+                <p>TO FILL</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <h2>Conclusion</h2>
+                <p>TPO FILL</p>
+
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section class="last">
+        <div class="row">
+            <div class="columns small-12 medium-10 small-centered">
+                <h2>Credits and Bibliography</h2>
+                <p>TO FILL</p>
+                <!-- <p><a target="_blank" href="http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/">http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/</a> Feb 22nd 2016</p> -->
+            </div>
+        </div>
+    </section>
+</body>
+</html>
