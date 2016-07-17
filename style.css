@@ -1,0 +1,48 @@
+body {
+    font-family: sans-serif;
+    color: rgba(10, 31, 51, 0.83);
+    font-weight: 400;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+img {
+    height: 160px;
+}
+
+a {
+    color: #368ce5;
+}
+
+p.name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+p.bio {
+    margin-bottom: 1.5rem;
+}
+
+.flex-container {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex-direction: row;
+    -moz-box-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.flex-item {
+    margin: auto;
+}
